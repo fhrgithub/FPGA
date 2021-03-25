@@ -1,7 +1,9 @@
 # HDMI output with PL based on PYNQ
 
 Device:PYNQ
+
 Version:Vivado 2018.3
+
 IP:Clocking Wizard、RGB to DVI Video Encoder (Source)
 
 ## Reference
