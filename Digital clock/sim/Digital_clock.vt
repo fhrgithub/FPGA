@@ -1,0 +1,103 @@
+// Copyright (C) 1991-2013 Altera Corporation
+// Your use of Altera Corporation's design tools, logic functions 
+// and other software and tools, and its AMPP partner logic 
+// functions, and any output files from any of the foregoing 
+// (including device programming or simulation files), and any 
+// associated documentation or information are expressly subject 
+// to the terms and conditions of the Altera Program License 
+// Subscription Agreement, Altera MegaCore Function License 
+// Agreement, or other applicable license agreement, including, 
+// without limitation, that your use is for the sole purpose of 
+// programming logic devices manufactured by Altera and sold by 
+// Altera or its authorized distributors.  Please refer to the 
+// applicable agreement for further details.
+
+// *****************************************************************************
+// This file contains a Verilog test bench template that is freely editable to  
+// suit user's needs .Comments are provided in each section to help the user    
+// fill out necessary details.                                                  
+// *****************************************************************************
+// Generated on "05/20/2021 15:01:28"
+                                                                                
+// Verilog Test Bench template for design : Digital_clock
+// 
+// Simulation tool : ModelSim (Verilog)
+// 
+
+`timescale 1 ps/ 1 ps
+module Digital_clock_tb();
+// constants                                           
+// general purpose registers
+reg eachvec;
+// test vector input registers
+reg clk;
+reg rst_n;
+reg ena;
+reg [7:0] s_hh;
+reg [7:0] s_mm;
+reg [7:0] s_ss;
+reg set;
+// wires                                               
+wire [7:0]  hh;
+wire [7:0]  mm;
+wire [7:0]  ss;
+
+// assign statements (if any)                          
+Digital_clock i1 (
+// port map - connection between master ports and signals/registers   
+	.clk(clk),
+	.hh(hh),
+	.mm(mm),
+	.rst_n(rst_n),
+	.ena(ena),
+	.s_hh(s_hh),
+	.s_mm(s_mm),
+	.s_ss(s_ss),
+	.set(set),
+	.ss(ss)
+);
+initial                                                
+begin                                                  
+// code that executes only once                        
+// insert code here --> begin                          
+	rst_n = 1'b0;
+	ena = 1'b1;
+	clk = 1'b1;
+	set = 0;
+	s_hh = 8'd23;
+	s_mm = 8'd59;
+	s_ss = 8'd50;
+	#10
+	rst_n = 1'b1;
+	#1000
+	set = 1'b1;
+	#10
+	set = 1'b0;
+	#1000
+	ena = 1'b0;
+	#100
+	ena = 1'b1;
+	#1000
+	rst_n = 1'b0;
+	#10
+	rst_n = 1'b1;
+	
+	
+// --> end                                             
+$display("Running testbench");                       
+end                                                    
+always                                                 
+// optional sensitivity list                           
+// @(event1 or event2 or .... eventn)                  
+begin                                                  
+// code executes for every event on sensitivity list   
+// insert code here --> begin                          
+                                                       
+@eachvec;                                              
+// --> end                                             
+end      
+
+always #5 clk = ~clk;
+                                              
+endmodule
+

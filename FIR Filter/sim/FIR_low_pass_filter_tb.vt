@@ -1,0 +1,94 @@
+// Copyright (C) 1991-2013 Altera Corporation
+// Your use of Altera Corporation's design tools, logic functions 
+// and other software and tools, and its AMPP partner logic 
+// functions, and any output files from any of the foregoing 
+// (including device programming or simulation files), and any 
+// associated documentation or information are expressly subject 
+// to the terms and conditions of the Altera Program License 
+// Subscription Agreement, Altera MegaCore Function License 
+// Agreement, or other applicable license agreement, including, 
+// without limitation, that your use is for the sole purpose of 
+// programming logic devices manufactured by Altera and sold by 
+// Altera or its authorized distributors.  Please refer to the 
+// applicable agreement for further details.
+
+// *****************************************************************************
+// This file contains a Verilog test bench template that is freely editable to  
+// suit user's needs .Comments are provided in each section to help the user    
+// fill out necessary details.                                                  
+// *****************************************************************************
+// Generated on "05/10/2021 22:01:32"
+                                                                                
+// Verilog Test Bench template for design : FIR_low_pass_filter
+// 
+// Simulation tool : ModelSim (Verilog)
+// 
+
+`timescale 1 ps/ 1 ps
+module FIR_low_pass_filter_tb();
+// constants                                           
+// general purpose registers
+reg eachvec;
+// test vector input registers
+reg CLK;
+reg [7:0] FIR_IN;
+reg RSTn;
+reg [7:0] mem[1:4096];
+
+// wires                                               
+wire [16:0]  FIR_OUT;
+
+reg [12:0] i;
+
+// assign statements (if any)                          
+FIR_low_pass_filter i1 (
+// port map - connection between master ports and signals/registers   
+	.CLK(CLK),
+	.FIR_IN(FIR_IN),
+	.FIR_OUT(FIR_OUT),
+	.RSTn(RSTn)
+);
+initial                                                
+begin                                                  
+// code that executes only once                        
+// insert code here --> begin                          
+
+	$readmemh("D:/Documents/FHR/MATLAB/FIR low pass filter/mem.txt",mem);//将待滤波信号读入mem
+	RSTn= 0;
+	CLK= 0;
+	#50;
+	RSTn= 1;
+	#50000;
+	$stop;
+
+// --> end                                             
+$display("Running testbench");                       
+end                                                    
+always                                                 
+// optional sensitivity list                           
+// @(event1 or event2 or .... eventn)                  
+begin                                                  
+// code executes for every event on sensitivity list   
+// insert code here --> begin                          
+
+@eachvec;
+// --> end                                             
+end    
+
+always@(posedge CLK or negedge RSTn)
+	if(!RSTn)
+		FIR_IN <= 8'b0 ;
+	else
+		FIR_IN <= mem[i];
+
+always@(posedge CLK or negedge RSTn)
+	if(!RSTn)
+		i <= 12'd0;
+	else
+		i <= i + 1'd1;
+
+always #10 CLK = ~CLK;
+
+                                                
+endmodule
+
